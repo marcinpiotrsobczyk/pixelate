@@ -1,5 +1,5 @@
 [submodule "external/stc"]
-	path = external/stc
+	path = external/stb
 	url = https://github.com/nothings/stb.git
 [submodule "external/ftxui"]
 	path = external/ftxui
