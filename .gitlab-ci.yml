@@ -1,0 +1,47 @@
+# You can copy and paste this template into a new `.gitlab-ci.yml` file.
+# You should not add this template to an existing `.gitlab-ci.yml` file by using the `include:` keyword.
+#
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/C++.gitlab-ci.yml
+
+# use the official gcc image, based on debian
+# can use versions as well, like gcc:5.2
+# see https://hub.docker.com/_/gcc/
+
+image: ubuntu
+
+variables:
+  GIT_DEPTH: 7
+  GIT_SUBMODULE_DEPTH: 3
+  GIT_SUBMODULE_STRATEGY: "recursive"
+  CI_DEBUG_SERVICES: "true"
+  FF_NETWORK_PER_BUILD: "true"
+stages:
+  - build
+  - test
+  - deploy
+
+
+build:
+  stage:
+    build
+  script:
+    - apt update && apt install -y git build-essential cmake libboost-all-dev cmake
+    - cmake -B build -D CMAKE_BUILD_TYPE=Debug
+    - cmake --build build
+  artifacts:
+      name: "$CI_JOB_NAME"
+      paths:
+        - build
+
+
+clang_format:
+  stage: test
+  needs: []
+  script:
+    - apt update && apt install -y git build-essential cmake clang-format clang-tidy
+    - find . -not \( -path ./external -prune \) -name "*.cpp" -o -name "*.cc" -o -name "*.h" -o -name "*.hpp"
+    - find . -not \( -path ./external -prune \) -name "*.cpp" -o -name "*.cc" -o -name "*.h" -o -name "*.hpp" |
+      xargs -n 1 clang-format -style=llvm --dry-run -Werror

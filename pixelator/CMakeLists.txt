@@ -4,8 +4,9 @@
 # - drawer
 # - image
 # - pixelate_image
-add_library(stb_image_data_view STATIC )
-target_include_directories(stb PUBLIC ${PROJECT_SOURCE_DIR}/pixelate)
+add_library(stb_image_data_view STATIC stb_image_data_view.cpp stb_image_data_view.hpp)
+target_link_libraries(stb_image_data_view PRIVATE cxx_setup stb::stb)
+target_include_directories(std_image_data_view INTERFACE ${PROJECT_SOURCE_DIR}/external)
 
 
 if(BUILD_TESTING)
