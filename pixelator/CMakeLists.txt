@@ -4,6 +4,9 @@
 # - drawer
 # - image
 # - pixelate_image
+add_library(stb_image_data_view STATIC )
+target_include_directories(stb PUBLIC ${PROJECT_SOURCE_DIR}/pixelate)
+
 
 if(BUILD_TESTING)
   include(GoogleTest)

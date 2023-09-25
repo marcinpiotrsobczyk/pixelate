@@ -1,6 +1,3 @@
-include(gtest.cmake)
-include(ftxui.cmake)
-include(stb.cmake)
 cmake_minimum_required(VERSION 3.16..3.24)
 project(pixelator VERSION 1
   DESCRIPTION "Pixelate images in terminal"
