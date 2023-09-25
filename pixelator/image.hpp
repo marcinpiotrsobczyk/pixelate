@@ -1,31 +1,71 @@
-// Can be created empty
-pixelator::Image empty_image{};
+#include "stb_image_data_view.hpp"
 
-// Can be created with size provided.
-const auto rows{42};
-const auto cols{23};
-pixelator::Image image{rows, cols};
+#include <ftxui/screen/color.hpp>
+#include <stb/stb_image.h>
 
-// Has all the useful methods to get its size.
-empty_image.empty(); // Should be true.
-image.empty();       // Should be false.
-image.rows();        // Should be equal to rows.
-image.cols();        // Should be equal to cols.
-image.size();        // Should return pixelator::Size{rows, cols}.
+#include <filesystem>
+#include <iostream>
+#include <vector>
 
-// Should provide read access to the colors.
-// All pixels must be initialized.
-image.at(0, 0) == ftxui::Color{};
+namespace pixelator {
 
-// Should provide write access to the colors.
-const ftxui::Color yellowish{ftxui::Color::RGB(255, 200, 100)};
-image.at(4, 2) = yellowish;
-image.at(4, 2) == yellowish; // Should be true.
+constexpr int MAX_PIXELS = 32768;
 
-// We should be able to copy an image
-const pixelator::Image image_copy{image};
-image_copy.at(4, 2) == yellowish; // Should be true.
+class Image {
+public:
+  Image();
+  Image(int desired_rows, int desired_cols);
+  Image(const Image &other);
+  Image(Image &&other);
+  ~Image();
+  Image &operator(const Image &other);
+  Image &operator=(Image &&other);
 
-// We should be able to move an image
-const pixelator::Image image_moved{std::move(image)};
-image_moved.at(4, 2) == yellowish; // Should be true.
+  bool empty() { return empty; }
+  int rows() { return rows; }
+  int cols() { return cols; }
+  Size size() { return size; }
+
+  ftxui::Color &at(int query_row, int query_col);
+
+private:
+  std::vector<ftxui::Color> color_data;
+  bool empty;
+  int rows;
+  int cols;
+  Size size;
+};
+
+// // Can be created empty
+// pixelator::Image empty_image{};
+
+// // Can be created with size provided.
+// const auto rows{42};
+// const auto cols{23};
+// pixelator::Image image{rows, cols};
+
+// // Has all the useful methods to get its size.
+// empty_image.empty(); // Should be true.
+// image.empty();       // Should be false.
+// image.rows();        // Should be equal to rows.
+// image.cols();        // Should be equal to cols.
+// image.size();        // Should return pixelator::Size{rows, cols}.
+
+// // Should provide read access to the colors.
+// // All pixels must be initialized.
+// image.at(0, 0) == ftxui::Color{};
+
+// // Should provide write access to the colors.
+// const ftxui::Color yellowish{ftxui::Color::RGB(255, 200, 100)};
+// image.at(4, 2) = yellowish;
+// image.at(4, 2) == yellowish; // Should be true.
+
+// // We should be able to copy an image
+// const pixelator::Image image_copy{image};
+// image_copy.at(4, 2) == yellowish; // Should be true.
+
+// // We should be able to move an image
+// const pixelator::Image image_moved{std::move(image)};
+// image_moved.at(4, 2) == yellowish; // Should be true.
+
+} // namespace pixelator

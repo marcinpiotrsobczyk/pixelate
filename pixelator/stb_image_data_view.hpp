@@ -1,5 +1,5 @@
-#include "ftxui/screen/color.hpp"
-#include "stb/stb_image.h"
+#include <ftxui/screen/color.hpp>
+#include <stb/stb_image.h>
 
 #include <filesystem>
 #include <iostream>
@@ -32,20 +32,20 @@ public:
   StbImageDataView &operator=(const StbImageDataView &other) = delete;
   StbImageDataView &operator=(StbImageDataView &&other);
 
-  Size size();
-  int rows();
-  int cols();
-  bool empty();
+  bool empty() { return empty; }
+  int rows() { return rows; }
+  int cols() { return cols; }
+  Size size() { return size; }
 
-  const ftxui::Color color at(int query_row, int query_col);
+  const ftxui::Color at(int query_row, int query_col);
 
 private:
   stbi_uc *image_data;
+  bool empty;
   int rows;
   int cols;
-  int channels;
   Size size;
-  bool empty;
+  int channels;
 };
 
 // // We must have simple accessors
@@ -70,7 +70,8 @@ private:
 // pixelator::StbImageDataView other_image = image; // ❌ Must not compile
 // empty_image = image;                             // ❌ Must not compile
 
-At the end, the StbImageDataView objects should free the underlying memory upon
-                destruction.
+// At the end, the StbImageDataView objects should free the underlying memory
+// upon
+//                 destruction.
 
 } // namespace pixelator

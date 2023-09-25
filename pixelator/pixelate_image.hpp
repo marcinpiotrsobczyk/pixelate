@@ -1,3 +1,14 @@
+#include "ftxui/screen/color.hpp"
+#include "stb/stb_image.h"
+
+#include <filesystem>
+#include <iostream>
+#include <vector>
+
+namespace pixelator {
+
+Image PixelateImage(StbImageDataView image_data_view, Size size);
+
 // Use the test image provided in the project skeleton for tests.
 const auto kImagePath{"../../tui_pixelator/test_data/test.png"};
 const pixelator::StbImageDataView image{kImagePath};
@@ -16,3 +27,5 @@ const auto smallest_factor = std::min(factor_cols, factor_rows);
 int Scale(int number, float factor) {
   return static_cast<int>(number * factor);
 }
+
+} // namespace pixelator
