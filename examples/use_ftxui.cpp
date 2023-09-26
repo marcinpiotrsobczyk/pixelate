@@ -11,7 +11,7 @@ int main() {
   auto &pixel_left = screen.PixelAt(10, 10);
   pixel_left.background_color = kYellowishColor;
   pixel_left.character = ' ';
-  auto &pixel_right = screen.PixelAt(11, 10);
+  auto &pixel_right = screen.PixelAt(13, 10);
   pixel_right.background_color = kYellowishColor;
   pixel_right.character = ' ';
   screen.Print();

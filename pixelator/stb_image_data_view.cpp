@@ -54,6 +54,8 @@ StbImageDataView::~StbImageDataView() {
 }
 
 StbImageDataView &StbImageDataView::operator=(StbImageDataView &&other) {
+  if (image_data != nullptr)
+    stbi_image_free(image_data);
   image_data = other.image_data;
   empty = other.empty;
   rows = other.rows;
