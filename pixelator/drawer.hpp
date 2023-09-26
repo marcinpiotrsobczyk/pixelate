@@ -1,8 +1,37 @@
-// We should be able to create a drawer either of fixed size or of the maximum
-// size that the terminal is capable of. Read the ftxui docs to understand these
-// parameters better.
-pixelator::Drawer full_screen_drawer{ftxui::Dimension::Full()};
-pixelator::Drawer fixed_screen_drawer{ftxui::Dimension::Fixed(42)};
+#include "image.hpp"
+#include "stb_image_data_view.hpp"
+
+#include <ftxui/screen/color.hpp>
+#include <stb/stb_image.h>
+
+#include <filesystem>
+#include <iostream>
+#include <vector>
+
+namespace pixelator {
+
+
+class Drawer {
+public:
+  Drawer(ftxui::Dimensions desired_dimensions);
+
+
+  int rows() { return rows; }
+  int cols() { return cols; }
+  Size size() { return size; }
+
+private:
+  int rows;
+  int cols;
+  Size size;
+  ftxui::Dimensions dimensions;
+};
+
+// // We should be able to create a drawer either of fixed size or of the maximum
+// // size that the terminal is capable of. Read the ftxui docs to understand these
+// // parameters better.
+// pixelator::Drawer full_screen_drawer{ftxui::Dimension::Full()};
+// pixelator::Drawer fixed_screen_drawer{ftxui::Dimension::Fixed(42)};
 
 // All the following must be true.
 // Note that the number of cols should be twice the number of rows, see
@@ -22,3 +51,6 @@ full_screen_drawer.Set(pixelated_image);
 // under the hood.
 full_screen_drawer.Draw();     // Draws to the terminal.
 full_screen_drawer.ToString(); // Prints to string, used for testing.
+
+
+} // namespace pixelator
