@@ -1,3 +1,5 @@
+#pragma once
+
 #include <ftxui/screen/color.hpp>
 #include <stb/stb_image.h>
 
@@ -32,20 +34,20 @@ public:
   StbImageDataView &operator=(const StbImageDataView &other) = delete;
   StbImageDataView &operator=(StbImageDataView &&other);
 
-  bool empty() { return empty; }
-  int rows() { return rows; }
-  int cols() { return cols; }
-  Size size() { return size; }
+  bool empty() const { return _empty; }
+  int rows() const { return _rows; }
+  int cols() const { return _cols; }
+  Size size() const { return _size; }
 
-  const ftxui::Color at(int query_row, int query_col);
+  const ftxui::Color at(int query_row, int query_col) const;
 
 private:
   stbi_uc *image_data;
-  bool empty;
-  int rows;
-  int cols;
-  Size size;
-  int channels;
+  bool _empty;
+  int _rows;
+  int _cols;
+  Size _size;
+  int _channels;
 };
 
 // // We must have simple accessors

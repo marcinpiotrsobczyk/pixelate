@@ -1,7 +1,8 @@
+#pragma once
+
 #include "stb_image_data_view.hpp"
 
 #include <ftxui/screen/color.hpp>
-#include <stb/stb_image.h>
 
 #include <filesystem>
 #include <iostream>
@@ -14,26 +15,26 @@ constexpr int MAX_PIXELS = 32768;
 class Image {
 public:
   Image();
-  Image(int desired_rows, int desired_cols);
+  Image(int desired_row, int desired_col);
   Image(const Image &other);
   Image(Image &&other);
   ~Image();
-  Image &operator(const Image &other);
+  Image &operator=(const Image &other);
   Image &operator=(Image &&other);
 
-  bool empty() { return empty; }
-  int rows() { return rows; }
-  int cols() { return cols; }
-  Size size() { return size; }
+  bool empty() const { return _empty; }
+  int rows() const { return _rows; }
+  int cols() const { return _cols; }
+  Size size() const { return _size; }
 
   ftxui::Color &at(int query_row, int query_col);
 
 private:
   std::vector<ftxui::Color> color_data;
-  bool empty;
-  int rows;
-  int cols;
-  Size size;
+  bool _empty;
+  int _rows;
+  int _cols;
+  Size _size;
 };
 
 // // Can be created empty

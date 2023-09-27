@@ -3,19 +3,18 @@
 #include <algorithm>
 #include <cfenv>
 #include <cmath>
-#include <exception>
 #include <stdexcept>
 #include <utility>
 
 namespace pixelator {
 
-Image PixelateImage(StbImageDataView image_data_view, Size smaller_size) {
+Image PixelateImage(const StbImageDataView &image_data_view, Size smaller_size) {
   if (smaller_size.row <= 0 or smaller_size.col <= 0) {
     std::string msg =
         "Scaled size must be positive: " + std::to_string(smaller_size.row) +
         " " + std::to_string(smaller_size.col);
     std::cerr << msg << std::endl;
-    throw std::exception(msg);
+    throw std::logic_error(msg);
   }
 
   if (smaller_size.row > image_data_view.rows() and
@@ -24,14 +23,14 @@ Image PixelateImage(StbImageDataView image_data_view, Size smaller_size) {
     for (int i = 0; i<image.rows(); ++i)
       for (int j = 0; j<image.cols(); ++j)
         image.at(i, j) = image_data_view.at(i, j);
-    return std::move(image);
+    return image;
   }
 
-  const double factor_rows =
-      smaller_size.rows / static_cast<double>(image_data_view.rows());
-  const double factor_cols =
-      smaller_size.cols / static_cast<double>(image_data_view.cols());
-  const double smallest_factor = std::min(factor_rows, factor_cols);
+  const double factor_row =
+      smaller_size.row / static_cast<double>(image_data_view.rows());
+  const double factor_col =
+      smaller_size.col / static_cast<double>(image_data_view.cols());
+  const double smallest_factor = std::min(factor_row, factor_col);
   Size new_size;
   new_size.row = static_cast<int>(image_data_view.rows() * smallest_factor);
   new_size.col = static_cast<int>(image_data_view.cols() * smallest_factor);
@@ -40,7 +39,7 @@ Image PixelateImage(StbImageDataView image_data_view, Size smaller_size) {
                       std::to_string(new_size.row) + " " +
                       std::to_string(new_size.col);
     std::cerr << msg << std::endl;
-    throw std::exception(msg);
+    throw std::logic_error(msg);
   }
 
   Image image(new_size.row, new_size.col);
@@ -78,7 +77,7 @@ Image PixelateImage(StbImageDataView image_data_view, Size smaller_size) {
       image.at(i, j) = target_pixel_color;
 
     }
-  return std::move(image);
+  return image;
 
 
 }

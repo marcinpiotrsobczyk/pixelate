@@ -1,8 +1,9 @@
+#pragma once
+
 #include "image.hpp"
 #include "stb_image_data_view.hpp"
 
 #include <ftxui/screen/color.hpp>
-#include <stb/stb_image.h>
 
 #include <filesystem>
 #include <iostream>
@@ -10,7 +11,7 @@
 
 namespace pixelator {
 
-Image PixelateImage(StbImageDataView image_data_view, Size smaller_size);
+Image PixelateImage(const StbImageDataView &image_data_view, Size smaller_size);
 
 // // Use the test image provided in the project skeleton for tests.
 // const auto kImagePath{"../../tui_pixelator/test_data/test.png"};

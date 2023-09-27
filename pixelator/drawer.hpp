@@ -1,8 +1,10 @@
+#pragma once
+
 #include "image.hpp"
 #include "stb_image_data_view.hpp"
 
 #include <ftxui/screen/color.hpp>
-#include <stb/stb_image.h>
+#include <ftxui/screen/screen.hpp>
 
 #include <string>
 
@@ -14,9 +16,9 @@ public:
   Drawer(ftxui::Dimensions desired_dimensions);
 
 
-  int rows() { return rows; }
-  int cols() { return cols; }
-  Size size() { return size; }
+  int rows() const { return _rows; }
+  int cols() const { return _cols; }
+  Size size() const { return _size; }
 
   void Set(Image image);
   void Draw();
@@ -24,9 +26,9 @@ public:
 
 private:
   ftxui::Dimensions dimensions;
-  int rows;
-  int cols;
-  Size size;
+  int _rows;
+  int _cols;
+  Size _size;
   ftxui::Screen screen;
   Image image;
 };
