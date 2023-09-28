@@ -47,30 +47,30 @@ Image PixelateImage(const StbImageDataView &image_data_view, Size smaller_size) 
     for (int j = 0; j<image.cols(); ++j) {
       double total_weight = 0.0;
       std::fesetround(FE_DOWNWARD);
-      double x_double_min = i / smallest_factor;
+      double x_double_min = j / smallest_factor;
       double y_double_min = i / smallest_factor;
       int x_min = std::lrint(x_double_min);
       int y_min = std::lrint(y_double_min);
       std::fesetround(FE_UPWARD);
-      double x_double_max = (i+1) / smallest_factor;
+      double x_double_max = (j+1) / smallest_factor;
       double y_double_max = (i+1) / smallest_factor;
       int x_max = std::lrint(x_double_max);
       int y_max = std::lrint(y_double_max);
       std::fesetround(FE_DOWNWARD);
 
       ftxui::Color target_pixel_color;
-      for (int k=x_min; k<x_max; ++k)
-        for (int l=y_min; l<y_max; ++l) {
+      for (int query_col=x_min; query_col<x_max; ++query_col)
+        for (int query_row=y_min; query_row<y_max; ++query_row) {
           double this_pixel_weight = 1.0;
-          if (k==x_min)
+          if (query_col==x_min)
             this_pixel_weight *= (x_min+1-x_double_min);
-          if (k==x_max)
+          if (query_col==x_max)
             this_pixel_weight *= (x_double_max-x_max+1);
-          if (l==y_min)
+          if (query_row==y_min)
             this_pixel_weight *= (y_min+1-y_double_min);
-          if (l==y_max)
+          if (query_row==y_max)
             this_pixel_weight *= (y_double_max-y_max+1);
-          ftxui::Color this_pixel_color = image_data_view.at(k, j);
+          ftxui::Color this_pixel_color = image_data_view.at(query_row, query_col);
           total_weight += this_pixel_weight;
           target_pixel_color = ftxui::Color::Interpolate(this_pixel_weight/total_weight, target_pixel_color, this_pixel_color);
         }

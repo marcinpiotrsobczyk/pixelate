@@ -22,8 +22,8 @@ void Drawer::Set(Image image_to_set) {
 }
 
 void Drawer::Draw() {
-    if ( _size.row!=image.size().row or _size.col!=image.size().col ) {
-        std::string msg = "Screen size and image size don't match";
+    if ( _size.row<image.size().row or _size.col<image.size().col ) {
+        std::string msg = "Screen is smaller then image";
         msg += "\n";
         msg += "Screen size is " + std::to_string(_size.row) + " " + std::to_string(_size.col);
         msg += "\n";
@@ -32,8 +32,8 @@ void Drawer::Draw() {
         throw std::logic_error(msg);
     }
 
-    for (int i=0; i < _size.row; ++i) {
-      for (int j=0; j < _size.col; ++j) {
+    for (int i=0; i < image.size().row; ++i) {
+      for (int j=0; j < image.size().col; ++j) {
         auto color = image.at(i, j);
         auto &pixel = screen_ptr->PixelAt(j, i);
         pixel.background_color = color;
