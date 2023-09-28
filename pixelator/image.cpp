@@ -77,12 +77,14 @@ Image &Image::operator=(Image &&other) {
 }
 
 ftxui::Color &Image::at(int query_row, int query_col) {
-  if (query_row < 0 or query_row >= _rows or query_col < 0 or query_col >= _cols) {
+  if (query_row < 0 or query_row >= _rows or query_col < 0 or
+      query_col >= _cols) {
     std::string msg =
         "Invalid coordinates if pixel: " + std::to_string(query_row) + " " +
         std::to_string(query_col);
     msg += "\n";
-    msg += "Image has size: " + std::to_string(_rows) + " " + std::to_string(_cols);
+    msg += "Image has size: " + std::to_string(_rows) + " " +
+           std::to_string(_cols);
     std::cerr << msg << std::endl;
     throw std::out_of_range(msg);
   }

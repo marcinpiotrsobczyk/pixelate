@@ -14,8 +14,8 @@ StbImageDataView::StbImageDataView(std::filesystem::path image_path) {
     throw std::logic_error(msg);
   }
 
-  image_data =
-      stbi_load(image_path.c_str(), &_cols, &_rows, &_channels, kLoadAllChannels);
+  image_data = stbi_load(image_path.c_str(), &_cols, &_rows, &_channels,
+                         kLoadAllChannels);
   _empty = false;
   _size.row = _rows;
   _size.col = _cols;
@@ -70,12 +70,14 @@ StbImageDataView &StbImageDataView::operator=(StbImageDataView &&other) {
 }
 
 const ftxui::Color StbImageDataView::at(int query_row, int query_col) const {
-  if (query_row < 0 or query_row >= _rows or query_col < 0 or query_col >= _cols) {
+  if (query_row < 0 or query_row >= _rows or query_col < 0 or
+      query_col >= _cols) {
     std::string msg =
         "Invalid coordinates if pixel: " + std::to_string(query_row) + " " +
         std::to_string(query_col);
     msg += "\n";
-    msg += "Image has size: " + std::to_string(_rows) + " " + std::to_string(_cols);
+    msg += "Image has size: " + std::to_string(_rows) + " " +
+           std::to_string(_cols);
     std::cerr << msg << std::endl;
     throw std::out_of_range(msg);
   }
