@@ -8,13 +8,13 @@
 namespace pixelator {
 
 
-Drawer::Drawer(ftxui::Dimensions desired_dimensions)
-  : screen(ftxui::Screen::Create(dimensions)) {
+Drawer::Drawer(ftxui::Dimensions desired_dimensions) {
     dimensions = desired_dimensions;
     _rows = dimensions.dimy;
     _cols = dimensions.dimx;
     _size.row = _rows;
     _size.col = _cols;
+    screen_ptr = std::make_unique<ftxui::Screen>( _cols, _rows );
 }
 
 void Drawer::Set(Image image_to_set) {
@@ -35,13 +35,13 @@ void Drawer::Draw() {
     for (int i=0; i < _size.row; ++i) {
       for (int j=0; j < _size.col; ++j) {
         auto color = image.at(i, j);
-        auto &pixel = screen.PixelAt(j, i);
+        auto &pixel = screen_ptr->PixelAt(j, i);
         pixel.background_color = color;
         pixel.character = ' ';
       }
     }
 
-  screen.Print();
+  screen_ptr->Print();
 }
 
 

@@ -7,7 +7,7 @@ namespace pixelator {
 
 Image::Image(int desired_row, int desired_col) {
   if (desired_row < 0 or desired_col < 0 or desired_row >= MAX_PIXELS or
-      desired_col >= desired_row) {
+      desired_col >= MAX_PIXELS) {
     std::string msg =
         "Desired image is too large: " + std::to_string(desired_row) + " " +
         std::to_string(desired_col);

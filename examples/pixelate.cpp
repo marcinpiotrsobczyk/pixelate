@@ -14,7 +14,7 @@ using pixelator::StbImageDataView;
 }  // namespace
 
 int main(int argc, char **argv) {
-  if (argc < 2) { std::cerr << "No image provided." << std::endl; }
+  if (argc < 2) { std::cerr << "No image provided." << std::endl; exit(1); }
 
   const StbImageDataView image{argv[1]};
   if (image.empty()) {

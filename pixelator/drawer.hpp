@@ -6,6 +6,7 @@
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
 
+#include <memory>
 #include <string>
 
 namespace pixelator {
@@ -29,7 +30,7 @@ private:
   int _rows;
   int _cols;
   Size _size;
-  ftxui::Screen screen;
+  std::unique_ptr<ftxui::Screen> screen_ptr;
   Image image;
 };
 
